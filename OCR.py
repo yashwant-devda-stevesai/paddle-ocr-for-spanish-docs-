@@ -99,3 +99,5 @@ for i, res in enumerate(results, start=1):
     print(f"Saved TXT : {txt_path} ({len(lines)} lines)")
 
 print("\nDone!")
+
+print("Testing for git")
