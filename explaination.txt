@@ -1,0 +1,83 @@
+Simple Summary
+
+This Paddle_OCR folder is a Python OCR project. Its job is to read text from images or PDF documents using PaddleOCR-VL, save the raw OCR result, and then optionally clean the extracted text using a post-processing script.
+
+Main Files
+
+OCR.py
+This is the main OCR script.
+
+It does these steps:
+
+Sets Paddle/OCR environment settings.
+Defines input path:
+INPUT_PATH = r"document_folder"
+Defines output folder:
+OUTPUT_DIR = "raw_result"
+Loads the PaddleOCR-VL model.
+Runs OCR on the input file.
+Saves two outputs for each result:
+result_1.json = full structured OCR output
+result_1.txt = simple extracted text
+Important note: the code currently expects INPUT_PATH to be a single image or PDF file, but it is set to document_folder. Since document_folder is a folder, this script may fail unless you change it to a real file path like:
+
+INPUT_PATH = r"document_folder\sample.pdf"
+post_processing.py
+This file cleans the OCR result.
+
+It is designed mainly for Spanish/legal-style documents. It removes noise and fixes common OCR problems such as:
+
+unwanted header/footer labels
+garbage symbols
+repeated blank lines
+broken hyphenated words
+missing spaces
+OCR mistakes like 0 instead of o
+some Spanish legal phrase mistakes
+accent restoration where possible
+strange non-Latin hallucinated text
+You can run it like:
+
+python post_processing.py --input raw_result\result_1.json --output cleaned\result_1.txt
+requirements.txt
+This contains all required Python packages, including:
+
+paddleocr
+paddlepaddle
+paddlex
+opencv
+spacy
+symspellpy
+wordfreq
+pandas
+PyMuPDF
+README.md
+This explains setup, installation, how to run OCR, GPU setup, and expected output.
+
+document_folder/
+This is where input documents should be placed.
+
+explaination.txt
+This file is currently empty.
+
+Workflow
+
+The project flow is:
+
+Input PDF/Image
+      ↓
+OCR.py
+      ↓
+raw_result/result_1.json
+raw_result/result_1.txt
+      ↓
+post_processing.py
+      ↓
+cleaned text output
+In Very Simple Words
+
+This project takes a document image or PDF, reads the text from it using PaddleOCR, saves the extracted text, and then cleans the text to make it more readable.
+
+The first script extracts text.
+The second script cleans text.
+The requirements file installs the tools needed to run everything.
